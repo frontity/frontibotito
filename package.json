@@ -1,0 +1,27 @@
+{
+  "name": "github-mentions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "env-cmd .env node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orballo/github-mentions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orballo/github-mentions/issues"
+  },
+  "homepage": "https://github.com/orballo/github-mentions#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "env-cmd": "^7.0.0",
+    "express": "^4.16.2",
+    "slack-node": "^0.1.8"
+  }
+}
