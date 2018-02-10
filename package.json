@@ -2,10 +2,10 @@
   "name": "github-mentions",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "dev": "env-cmd .env node ./src/index.js",
+    "start": "micro",
+    "dev": "env-cmd .env micro-dev",
     "deploy": "now --public && now alias"
   },
   "repository": {
@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/orballo/github-mentions#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
     "env-cmd": "^7.0.0",
-    "express": "^4.16.2",
+    "micro": "^9.1.0",
+    "micro-dev": "^2.2.0",
     "slack-node": "^0.1.8"
   },
   "now": {

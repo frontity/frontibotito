@@ -1,13 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const { json } = require('micro');
 const Slack = require('slack-node');
 const { promisify } = require('util');
 const users = require('./users.json');
 
-const app = express();
 const slack = promisify(new Slack(process.env.SLACK_TOKEN).api);
 
-const notifyUser = async (mention, data) => {
+const notifyUser = async (mention, { repository, issue, comment }) => {
   const im = await slack('im.open', {
     user: mention.slack,
   });
@@ -15,36 +13,32 @@ const notifyUser = async (mention, data) => {
   const attachments = [
     {
       color: '#4682b4',
-      author_name: data.repository.name,
-      author_link: data.repository.url,
-      title: `Issue #${data.issue.number}`,
-      title_link: data.issue.url,
-      text: data.issue.title,
+      author_name: repository.name,
+      author_link: repository.url,
+      title: `Issue #${issue.number}`,
+      title_link: issue.url,
+      text: issue.title,
     },
     {
       color: '#4682b4',
-      author_name: data.comment.author,
-      author_link: data.comment.author_url,
+      author_name: comment.author,
+      author_link: comment.author_url,
       title: 'Comment',
-      title_link: data.comment.url,
-      text: data.comment.text,
-      thumb_url: data.comment.author_thumb,
+      title_link: comment.url,
+      text: comment.text,
+      thumb_url: comment.author_thumb,
     },
   ];
 
-  const message = await slack('chat.postMessage', {
+  slack('chat.postMessage', {
     channel: im.channel.id,
-    text: `Mentioned by <@${data.comment.author}>`,
+    text: `Mentioned by <@${comment.author}>`,
     attachments: JSON.stringify(attachments),
   });
-
-  console.log('Message sent:\n', message);
 };
 
-app.use(bodyParser.json());
-
-app.post('/payload', async (req, res) => {
-  const { action, issue, comment, repository } = req.body;
+module.exports = async (req, res) => {
+  const { action, issue, comment, repository } = await json(req);
 
   if (action !== 'deleted') {
     const mentions = users.filter(user => comment.body.match(new RegExp(`@${user.github}`)));
@@ -71,7 +65,5 @@ app.post('/payload', async (req, res) => {
     mentions.forEach(mention => notifyUser(mention, data));
   }
 
-  res.status(200).send('User notified.');
-});
-
-app.listen(3000, () => console.log('Listening to 3000'));
+  return 'User notified';
+};
