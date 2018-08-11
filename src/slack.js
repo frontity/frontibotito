@@ -9,11 +9,12 @@ module.exports = {
     });
 
     const type = issue || pull_request;
+    const color = issue ? '#4682b4' : '#6f42c1';
     const title = issue ? `Issue #${issue.number}` : `Pull Request #${pull_request.number}`;
 
     const attachments = [
       {
-        color: '#4682b4',
+        color,
         author_name: repository.name,
         author_link: repository.url,
         title,
@@ -21,7 +22,7 @@ module.exports = {
         text: type.title,
       },
       {
-        color: '#4682b4',
+        color,
         author_name: comment.author,
         author_link: comment.author_url,
         title: 'Comment',
