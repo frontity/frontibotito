@@ -4,10 +4,6 @@ const slack = new WebClient(process.env.SLACK_TOKEN);
 
 module.exports = {
   notifyUser: async (mentionedUser, { repository, issue, pull_request, comment }) => {
-    const im = await slack.im.open({
-      user: mentionedUser.slack,
-    });
-
     const type = issue || pull_request;
     const color = issue ? '#4682b4' : '#6f42c1';
     const title = issue ? `Issue #${issue.number}` : `Pull Request #${pull_request.number}`;
@@ -32,8 +28,10 @@ module.exports = {
       },
     ];
 
-    slack.chat.postMessage({
-      channel: im.channel.id,
+    await slack.chat.postMessage({
+      channel: (await slack.im.open({
+        user: mentionedUser.slack,
+      })).channel.id,
       text: `Mentioned by <@${comment.author}>`,
       attachments: JSON.stringify(attachments),
     });

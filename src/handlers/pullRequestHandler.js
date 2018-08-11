@@ -1,9 +1,9 @@
 const { getMentionedUsers, getAuthor } = require('../utils');
-const { OOPS_NO_HANDLERS, EVERYTHING_OK } = require('../constants/messages');
+const { OOPS_NO_HANDLER, EVERYTHING_OK } = require('../constants/messages');
 const { notifyUser } = require('../slack');
 
 module.exports = async ({ action, pull_request, comment, repository }) => {
-  if (action === 'deleted') return OOPS_NO_HANDLERS;
+  if (action === 'deleted') return OOPS_NO_HANDLER;
 
   const mentionedUsers = getMentionedUsers(comment);
 
