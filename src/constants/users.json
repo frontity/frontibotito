@@ -2,7 +2,8 @@
   {
     "name": "orballo",
     "slack": "U5NK5JLMS",
-    "github": "orballo"
+    "github": "orballo",
+    "suscriptions": ["production"]
   },
   {
     "name": "pablo",
@@ -20,7 +21,7 @@
     "github": "DAreRodz"
   },
   {
-    "name": "reyesmd",
+    "name": "reyes",
     "slack": "U0F9GBSH3",
     "github": "rmartinezduque"
   }

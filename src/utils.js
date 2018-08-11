@@ -2,10 +2,12 @@ const users = require('./constants/users');
 
 module.exports = {
   getMentionedUsers(comment) {
-    return users.filter(user => comment.body.match(new RegExp(`@${user.github}`)));
+    return users.filter(({ github }) => comment.body.match(new RegExp(`@${github}`)));
   },
-
-  getAuthor(comment) {
-    return users.find(user => user.github === comment.user.login).name;
+  getSuscribedUsers(event) {
+    return users.filter(({ suscriptions }) => suscriptions && suscriptions.includes(event));
+  },
+  getAuthor(sender) {
+    return users.find(({ github }) => github === sender.login).name;
   },
 };

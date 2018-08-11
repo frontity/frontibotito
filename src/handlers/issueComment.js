@@ -1,9 +1,10 @@
 const { getMentionedUsers, getAuthor } = require('../utils');
+const { notifyMention } = require('../slack');
+
 const { OOPS_NO_HANDLER, EVERYTHING_OK } = require('../constants/messages');
-const { notifyUser } = require('../slack');
 
 module.exports = async ({ action, issue, comment, repository }) => {
-  if (action === 'deleted') return OOPS_NO_HANDLER;
+  if (action === 'deleted' || action === 'edited') return OOPS_NO_HANDLER;
 
   const mentionedUsers = getMentionedUsers(comment);
 
@@ -19,14 +20,14 @@ module.exports = async ({ action, issue, comment, repository }) => {
     },
     comment: {
       text: comment.body,
-      author: getAuthor(comment),
-      author_url: comment.user.html_url,
-      author_thumb: comment.user.avatar_url,
       url: comment.html_url,
+      author: getAuthor(sender),
+      author_url: sender.html_url,
+      author_thumb: sender.avatar_url,
     },
   };
 
-  await Promise.all(mentionedUsers.map(mentionedUser => notifyUser(mentionedUser, data)));
+  await Promise.all(mentionedUsers.map(mentionedUser => notifyMention(mentionedUser, data)));
 
   return EVERYTHING_OK;
 };
