@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/orballo/github-mentions#readme",
   "dependencies": {
+    "@slack/client": "^4.4.0",
     "env-cmd": "^7.0.0",
     "micro": "^9.1.0",
-    "micro-dev": "^2.2.0",
-    "slack-node": "^0.1.8"
+    "micro-dev": "^2.2.0"
   },
   "now": {
     "name": "Github Mentions",
