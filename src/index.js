@@ -10,9 +10,9 @@ module.exports = async req => {
   const event = req.headers['x-github-event'];
   const data = await json(req);
 
-  if (event === 'issues') {
-    return await issuesHandler(data);
-  }
+  // if (event === 'issues') {
+  //   return await issuesHandler(data);
+  // }
   if (event === 'issue_comment') {
     return await issueCommentHandler(data);
   }
