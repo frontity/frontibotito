@@ -1,0 +1,10 @@
+{
+  "name": "Frontibotito",
+  "version": 2,
+  "alias": "mentions",
+  "env": {
+    "SLACK_TOKEN": "@slack-token"
+  },
+  "builds": [{ "src": "*.js", "use": "@now/node" }],
+  "routes": [{ "src": "/.*", "dest": "/src/index.js" }]
+}

@@ -16,9 +16,9 @@ module.exports = async req => {
   if (event === 'issue_comment') {
     return await issueCommentHandler(data);
   }
-  if (event === 'pull_request_review_comment') {
-    return await pullRequestReviewCommentHandler(data);
-  }
+  // if (event === 'pull_request_review_comment') {
+  //   return await pullRequestReviewCommentHandler(data);
+  // }
 
   return OOPS_NO_HANDLER;
 };

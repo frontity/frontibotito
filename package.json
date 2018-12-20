@@ -24,12 +24,5 @@
     "env-cmd": "^7.0.0",
     "micro": "^9.1.0",
     "micro-dev": "^2.2.0"
-  },
-  "now": {
-    "name": "Github Mentions",
-    "alias": "mentions",
-    "env": {
-      "SLACK_TOKEN": "@slack-token"
-    }
   }
 }
